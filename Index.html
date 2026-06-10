@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chess Invitation</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    overflow:hidden;
+}
+
+.container{
+    text-align:center;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    width:90%;
+    max-width:500px;
+}
+
+h1{
+    margin-bottom:20px;
+    color:#333;
+}
+
+.buttons{
+    position:relative;
+    height:120px;
+}
+
+button{
+    padding:12px 28px;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+#yesBtn{
+    background:#4CAF50;
+    color:white;
+    margin-right:10px;
+}
+
+#noBtn{
+    background:#ff4d4d;
+    color:white;
+    position:absolute;
+}
+
+#message{
+    margin-top:20px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+#link{
+    display:none;
+    margin-top:15px;
+}
+
+#link a{
+    color:#0066ff;
+    text-decoration:none;
+    font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1> Do you want to play Chess? ♟️</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 😎</button>
+        <button id="noBtn">No 🙄</button>
+    </div>
+
+    <div id="message"></div>
+
+    <div id="link">
+        <a href="https://www.chess.com/download" target="_blank">
+            Download Chess.com ♟️
+        </a>
+    </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+const link = document.getElementById("link");
+
+function moveButton(){
+    const maxX = window.innerWidth - 120;
+    const maxY = window.innerHeight - 80;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    const funnyMessages = [
+      
+        "No is not an option 😎",
+        "Chess is calling you ♟️",
+        "You can't escape! 😆",
+        "The No button is shy 🙈",
+        "Come on malkin ji  😭",
+        "oye shanti se aa jao 🔪",
+        "Kisi mahan aadmi nai kahaa hai bhale aadmi ko no nahi bolna chaiye 🫣",
+    ];
+
+    message.innerText =
+        funnyMessages[Math.floor(Math.random()*funnyMessages.length)];
+}
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("click", moveButton);
+
+yesBtn.addEventListener("click", () => {
+    message.innerHTML =
+    "🤯 I can't believe you clicked YES! I thought you'd choose NO. 😂";
+    link.style.display = "block";
+});
+</script>
+
+</body>
+</html>
