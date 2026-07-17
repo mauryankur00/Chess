@@ -83,7 +83,8 @@ h1{
 
 .buttons{
     position:relative;
-    height:140px;
+    height:220px;
+    width:100%;
 }
 
 button{
@@ -188,31 +189,28 @@ function updateYesButton() {
 }
 
 function moveButton() {
-
+    
     // Increase Yes button size
     yesScale += 0.15;
     if (yesScale > 3) yesScale = 3;
-
-    yesBtn.style.transform = `scale(${yesScale})`;
-
-    // Move only inside the buttons container
-    const container = document.querySelector(".buttons");
-
-    const containerRect = container.getBoundingClientRect();
-
+    updateYesButton();
+    
+    // Keep No button fully inside screen
     const btnWidth = noBtn.offsetWidth;
     const btnHeight = noBtn.offsetHeight;
-
-    const maxX = containerRect.width - btnWidth;
-    const maxY = containerRect.height - btnHeight;
-
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-
-    noBtn.style.position = "absolute";
+    
+    const margin = 20;
+    
+    const maxX = window.innerWidth - btnWidth - margin;
+    const maxY = window.innerHeight - btnHeight - margin;
+    
+    const x = Math.random() * (maxX - margin) + margin;
+    const y = Math.random() * (maxY - margin) + margin;
+    
+    noBtn.style.position = "fixed";
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
-
+    
     noBtn.animate([
         { transform: "scale(.8) rotate(-10deg)" },
         { transform: "scale(1.15) rotate(10deg)" },
@@ -221,18 +219,34 @@ function moveButton() {
         duration: 450,
         easing: "ease"
     });
-
+    
     const funnyMessages = [
         "No is not an option 😎",
-        "You can't escape 😂",
+        "Kya kami hai tumme? 😂",
+        "You can't escape! 😆",
+        "The No button is shy 🙈",
+        "Come on Malkin ji 🥺",
         "Bas ek baar Yes bol do ❤️",
-        "No button bhi sharma raha hai 🙈",
-        "Dil mat todo 🥺"
+        "Dil mat todo 😭",
+        "Kitni baar bhaagogi? 😂"
     ];
-
+    
     message.innerText =
         funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
 }
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("click", moveButton);
+
+yesBtn.addEventListener("click", () => {
+    
+    document.body.animate([
+        { transform: "scale(1)" },
+        { transform: "scale(1.02)" },
+        { transform: "scale(1)" }
+    ], {
+        duration: 500
+    });
     
     message.innerHTML = "❤️ Yay! Mujhe pata tha tum Yes hi bologi! 🥹";
     link.style.display = "block";
