@@ -188,28 +188,31 @@ function updateYesButton() {
 }
 
 function moveButton() {
-    
+
     // Increase Yes button size
     yesScale += 0.15;
     if (yesScale > 3) yesScale = 3;
-    updateYesButton();
-    
-    // Keep No button fully inside screen
+
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    // Move only inside the buttons container
+    const container = document.querySelector(".buttons");
+
+    const containerRect = container.getBoundingClientRect();
+
     const btnWidth = noBtn.offsetWidth;
     const btnHeight = noBtn.offsetHeight;
-    
-    const margin = 20;
-    
-    const maxX = window.innerWidth - btnWidth - margin;
-    const maxY = window.innerHeight - btnHeight - margin;
-    
-    const x = Math.random() * (maxX - margin) + margin;
-    const y = Math.random() * (maxY - margin) + margin;
-    
-    noBtn.style.position = "fixed";
+
+    const maxX = containerRect.width - btnWidth;
+    const maxY = containerRect.height - btnHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.position = "absolute";
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
-    
+
     noBtn.animate([
         { transform: "scale(.8) rotate(-10deg)" },
         { transform: "scale(1.15) rotate(10deg)" },
@@ -218,34 +221,18 @@ function moveButton() {
         duration: 450,
         easing: "ease"
     });
-    
+
     const funnyMessages = [
         "No is not an option 😎",
-        "Kya kami hai tumme? 😂",
-        "You can't escape! 😆",
-        "The No button is shy 🙈",
-        "Come on Malkin ji 🥺",
+        "You can't escape 😂",
         "Bas ek baar Yes bol do ❤️",
-        "Dil mat todo 😭",
-        "Kitni baar bhaagogi? 😂"
+        "No button bhi sharma raha hai 🙈",
+        "Dil mat todo 🥺"
     ];
-    
+
     message.innerText =
         funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
 }
-
-noBtn.addEventListener("mouseover", moveButton);
-noBtn.addEventListener("click", moveButton);
-
-yesBtn.addEventListener("click", () => {
-    
-    document.body.animate([
-        { transform: "scale(1)" },
-        { transform: "scale(1.02)" },
-        { transform: "scale(1)" }
-    ], {
-        duration: 500
-    });
     
     message.innerHTML = "❤️ Yay! Mujhe pata tha tum Yes hi bologi! 🥹";
     link.style.display = "block";
