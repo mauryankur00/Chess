@@ -3,38 +3,256 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chess Invitation</title>
+
+<title>Do You Love Me? ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, sans-serif;
+    font-family:'Poppins',sans-serif;
 }
 
 body{
-    height:100vh;
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#667eea,#764ba2);
     overflow:hidden;
+    background:linear-gradient(-45deg,#ff9a9e,#fad0c4,#fbc2eb,#a18cd1);
+    background-size:400% 400%;
+    animation:bg 12s ease infinite;
+    position:relative;
+}
+
+@keyframes bg{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* Floating hearts */
+body::before,
+body::after{
+    content:"❤️ 💖 💕 🤍";
+    position:absolute;
+    font-size:26px;
+    opacity:.18;
+    animation:float 12s linear infinite;
+}
+
+body::after{
+    right:10%;
+    animation-delay:6s;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+    }
+    to{
+        transform:translateY(-120vh);
+    }
 }
 
 .container{
-    text-align:center;
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
     width:90%;
     max-width:500px;
+    text-align:center;
+    padding:40px;
+
+    background:rgba(255,255,255,.18);
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:30px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
 
 h1{
-    margin-bottom:20px;
-    color:#333;
+    color:#fff;
+    font-size:2rem;
+    margin-bottom:25px;
+    text-shadow:0 5px 15px rgba(0,0,0,.3);
+}
+
+.buttons{
+    position:relative;
+    height:140px;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    padding:14px 34px;
+    font-size:18px;
+    font-weight:600;
+    border-radius:999px;
+
+    transition:
+    transform .35s,
+    box-shadow .35s,
+    left .6s cubic-bezier(.22,1,.36,1),
+    top .6s cubic-bezier(.22,1,.36,1);
+}
+
+#yesBtn{
+    background:linear-gradient(45deg,#00c853,#69f0ae);
+    color:white;
+    box-shadow:0 10px 25px rgba(0,200,83,.45);
+}
+
+#yesBtn:hover{
+    transform:scale(1.08);
+    box-shadow:0 18px 35px rgba(0,200,83,.55);
+}
+
+#noBtn{
+    position:absolute;
+    left:180px;
+    background:linear-gradient(45deg,#ff416c,#ff4b2b);
+    color:white;
+    box-shadow:0 10px 25px rgba(255,65,108,.45);
+}
+
+#message{
+    min-height:40px;
+    margin-top:25px;
+    font-size:22px;
+    color:white;
+    font-weight:bold;
+}
+
+#link{
+    display:none;
+    margin-top:18px;
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+    animation:fade .5s;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Do you love me? ❤️</h1>
+
+<div class="buttons">
+
+<button id="yesBtn">Yess 😎</button>
+
+<button id="noBtn">No 🙄</button>
+
+</div>
+
+<div id="message"></div>
+
+<div id="link">
+<p>💍 Tab rishta lekar ghar kab aana hai? 😂</p>
+</div>
+
+</div>
+
+<script>
+
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+const link = document.getElementById("link");
+
+let yesScale = 1;
+
+function updateYesButton() {
+    yesBtn.style.transform = `scale(${yesScale})`;
+    yesBtn.style.boxShadow = `0 0 ${20 * yesScale}px rgba(0,255,120,.6)`;
+}
+
+function moveButton() {
+    
+    // Increase Yes button size
+    yesScale += 0.15;
+    if (yesScale > 3) yesScale = 3;
+    updateYesButton();
+    
+    // Keep No button fully inside screen
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
+    
+    const margin = 20;
+    
+    const maxX = window.innerWidth - btnWidth - margin;
+    const maxY = window.innerHeight - btnHeight - margin;
+    
+    const x = Math.random() * (maxX - margin) + margin;
+    const y = Math.random() * (maxY - margin) + margin;
+    
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+    
+    noBtn.animate([
+        { transform: "scale(.8) rotate(-10deg)" },
+        { transform: "scale(1.15) rotate(10deg)" },
+        { transform: "scale(1)" }
+    ], {
+        duration: 450,
+        easing: "ease"
+    });
+    
+    const funnyMessages = [
+        "No is not an option 😎",
+        "Kya kami hai tumme? 😂",
+        "You can't escape! 😆",
+        "The No button is shy 🙈",
+        "Come on Malkin ji 🥺",
+        "Bas ek baar Yes bol do ❤️",
+        "Dil mat todo 😭",
+        "Kitni baar bhaagogi? 😂"
+    ];
+    
+    message.innerText =
+        funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
+}
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("click", moveButton);
+
+yesBtn.addEventListener("click", () => {
+    
+    document.body.animate([
+        { transform: "scale(1)" },
+        { transform: "scale(1.02)" },
+        { transform: "scale(1)" }
+    ], {
+        duration: 500
+    });
+    
+    message.innerHTML = "❤️ Yay! Mujhe pata tha tum Yes hi bologi! 🥹";
+    link.style.display = "block";
+});
+</script>
+
+</body>
+</html>    color:#333;
 }
 
 .buttons{
